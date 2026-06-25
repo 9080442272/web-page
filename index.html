@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A state-of-the-art developer dashboard and API playground for validating, testing, and managing API key configurations securely.">
+    <title>DevCore // API Dashboard & Playground</title>
+    
+    <!-- Google Fonts: Outfit for headers, Inter for UI text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+    <!-- Glowing background elements for premium aesthetic -->
+    <div class="glow-orb" id="orb-1"></div>
+    <div class="glow-orb" id="orb-2"></div>
+
+    <header class="main-header">
+        <div class="header-container">
+            <div class="brand-logo">
+                <i data-lucide="terminal" class="logo-icon"></i>
+                <span class="logo-text">Dev<span class="highlight">Core</span></span>
+                <span class="badge">v1.0.0</span>
+            </div>
+            <nav class="main-nav">
+                <a href="#dashboard" class="nav-link active">Dashboard</a>
+                <a href="#playground" class="nav-link">Playground</a>
+                <a href="#docs" class="nav-link">API Docs</a>
+            </nav>
+            <div class="system-status">
+                <div class="status-indicator online"></div>
+                <span class="status-text">Gateway Online</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard-container" id="dashboard">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-badge">
+                <i data-lucide="sparkles" class="badge-icon"></i> Developer Console Active
+            </div>
+            <h1>Secure Key Integration &amp; Playground</h1>
+            <p class="hero-subtitle">Manage your credentials, monitor gateway metrics, and test endpoints live with micro-latency simulation.</p>
+        </section>
+
+        <!-- Bento Grid Layout -->
+        <div class="bento-grid">
+            
+            <!-- Card 1: API Key Configurator (Large) -->
+            <section class="bento-card col-span-2 card-glow" id="key-configurator">
+                <div class="card-header">
+                    <div class="title-wrap">
+                        <i data-lucide="key-round" class="card-icon cyan-text"></i>
+                        <h2>API Key Config Center</h2>
+                    </div>
+                    <span class="card-badge secure-badge"><i data-lucide="shield-check"></i> AES-256 Encrypted</span>
+                </div>
+                
+                <p class="card-desc">Your gateway credentials are configured locally in the environment. Use the controls below to verify, copy, or update your key configuration.</p>
+                
+                <div class="key-control-box">
+                    <label for="api-key-input" class="input-label">Active API Key</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="api-key-input" class="api-input" value="8f6412c5e3969942032522cb998eaa2c7112c73fc28f9ed2ef35c228b6ba7129" readonly>
+                        <button type="button" id="toggle-key-visibility" class="icon-btn" aria-label="Toggle API key visibility">
+                            <i data-lucide="eye" id="visibility-icon"></i>
+                        </button>
+                        <button type="button" id="copy-key-btn" class="icon-btn" aria-label="Copy API key to clipboard">
+                            <i data-lucide="copy" id="copy-icon"></i>
+                        </button>
+                    </div>
+                    <span class="key-hint">Configured via <code>.env</code> file (environment variable <code>API_KEY</code>).</span>
+                </div>
+
+                <div class="config-actions">
+                    <button type="button" id="verify-key-btn" class="primary-btn">
+                        <i data-lucide="badge-check"></i> Verify Configuration
+                    </button>
+                    <div class="verification-status" id="verification-status">
+                        <span class="status-placeholder">Awaiting verification...</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Card 2: Live Metrics (Medium) -->
+            <section class="bento-card col-span-1" id="metrics-card">
+                <div class="card-header">
+                    <div class="title-wrap">
+                        <i data-lucide="activity" class="card-icon purple-text"></i>
+                        <h2>Gateway Metrics</h2>
+                    </div>
+                </div>
+                <p class="card-desc">Real-time simulation of gateway performance metrics.</p>
+                
+                <div class="metrics-list">
+                    <div class="metric-item">
+                        <span class="metric-label">Request Volume</span>
+                        <div class="metric-value-wrap">
+                            <span class="metric-value" id="request-count">1,248</span>
+                            <span class="metric-trend up"><i data-lucide="trending-up"></i> +12.4%</span>
+                        </div>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Avg. Latency</span>
+                        <div class="metric-value-wrap">
+                            <span class="metric-value" id="avg-latency">24ms</span>
+                            <span class="metric-trend down"><i data-lucide="trending-down"></i> -4.2%</span>
+                        </div>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Success Rate</span>
+                        <div class="metric-value-wrap">
+                            <span class="metric-value" id="success-rate">99.98%</span>
+                            <span class="metric-trend stable">Stable</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Card 3: Interactive Playground (Large) -->
+            <section class="bento-card col-span-2" id="playground">
+                <div class="card-header">
+                    <div class="title-wrap">
+                        <i data-lucide="play-circle" class="card-icon green-text"></i>
+                        <h2>Request Playground</h2>
+                    </div>
+                    <span class="card-badge method-badge">POST</span>
+                </div>
+                
+                <p class="card-desc">Test your API endpoints. The playground automatically appends the active API key as a bearer authorization token.</p>
+                
+                <div class="playground-form">
+                    <div class="form-row">
+                        <div class="form-group col-8">
+                            <label for="endpoint-select" class="input-label">Target Endpoint</label>
+                            <select id="endpoint-select" class="form-select">
+                                <option value="/api/v1/auth/status">GET /api/v1/auth/status — Auth Check</option>
+                                <option value="/api/v1/data/query">POST /api/v1/data/query — Query Gateway</option>
+                                <option value="/api/v1/crypto/encrypt">POST /api/v1/crypto/encrypt — Encrypt Utility</option>
+                                <option value="/api/v1/system/diagnostics">GET /api/v1/system/diagnostics — Diagnostics</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="payload-select" class="input-label">Payload Profile</label>
+                            <select id="payload-select" class="form-select">
+                                <option value="default">Default Config</option>
+                                <option value="custom-query">Custom Query</option>
+                                <option value="empty">Empty Body</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="request-payload" class="input-label">JSON Request Body</label>
+                        <textarea id="request-payload" class="code-editor" spellcheck="false">{
+  "config_id": "8f6412c5",
+  "environment": "production",
+  "debug_mode": false,
+  "options": {
+    "cache_ttl": 300,
+    "compress_response": true
+  }
+}</textarea>
+                    </div>
+
+                    <div class="playground-actions">
+                        <button type="button" id="send-request-btn" class="primary-btn success-glow">
+                            <i data-lucide="send"></i> Send Request
+                        </button>
+                        <div class="latency-display" id="latency-display">
+                            <!-- Latency display injected here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Card 4: Console Output / Terminal (Medium) -->
+            <section class="bento-card col-span-1" id="terminal-card">
+                <div class="card-header">
+                    <div class="title-wrap">
+                        <i data-lucide="terminal" class="card-icon yellow-text"></i>
+                        <h2>Terminal Response</h2>
+                    </div>
+                    <button type="button" id="clear-console-btn" class="text-btn">Clear</button>
+                </div>
+                
+                <div class="terminal-body" id="terminal-output">
+                    <div class="terminal-line system"><span class="prompt">$</span> devcore-cli init --ready</div>
+                    <div class="terminal-line"><span class="prompt">$</span> API Playground loaded. Select an endpoint above and click 'Send Request' to inspect responses.</div>
+                </div>
+            </section>
+
+            <!-- Card 5: Quick Docs (Large) -->
+            <section class="bento-card col-span-3" id="docs">
+                <div class="card-header">
+                    <div class="title-wrap">
+                        <i data-lucide="book-open" class="card-icon blue-text"></i>
+                        <h2>Quick Integration Reference</h2>
+                    </div>
+                </div>
+                
+                <div class="docs-content">
+                    <div class="doc-block">
+                        <h3>Authentication Header</h3>
+                        <p>Authenticate your HTTP requests by passing your API key as a Bearer token in the <code>Authorization</code> header:</p>
+                        <pre><code>Authorization: Bearer 8f6412c5e3969942032522cb...</code></pre>
+                    </div>
+                    <div class="doc-block">
+                        <h3>Node.js Client Code</h3>
+                        <p>A simple snippet to make authorized requests from your Node.js application:</p>
+                        <pre><code>const axios = require('axios');
+const response = await axios.post('https://api.devcore.io/v1/query', {
+  headers: {
+    'Authorization': `Bearer ${process.env.API_KEY}`,
+    'Content-Type': 'application/json'
+  },
+  data: { query: 'active' }
+});</code></pre>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <p>&copy; 2026 DevCore Inc. All rights reserved. Secured local console.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Use</a>
+                <a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill">Skill Docs</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- App JavaScript -->
+    <script src="app.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
