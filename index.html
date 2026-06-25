@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A state-of-the-art developer dashboard and API playground for validating, testing, and managing API key configurations securely.">
-    <title>DevCore // API Dashboard & Playground</title>
+    <title>DevCore // AI Agentic Console</title>
     
     <!-- Google Fonts: Outfit for headers, Inter for UI text -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,36 +20,84 @@
     <!-- Glowing background elements for premium aesthetic -->
     <div class="glow-orb" id="orb-1"></div>
     <div class="glow-orb" id="orb-2"></div>
+    <div class="glow-orb" id="orb-3"></div>
 
     <header class="main-header">
         <div class="header-container">
             <div class="brand-logo">
-                <i data-lucide="terminal" class="logo-icon"></i>
-                <span class="logo-text">Dev<span class="highlight">Core</span></span>
-                <span class="badge">v1.0.0</span>
+                <i data-lucide="cpu" class="logo-icon"></i>
+                <span class="logo-text">Agentic<span class="highlight">Core</span></span>
+                <span class="badge">v2.0-beta</span>
             </div>
             <nav class="main-nav">
-                <a href="#dashboard" class="nav-link active">Dashboard</a>
+                <a href="#hero" class="nav-link active">Home</a>
+                <a href="#dashboard" class="nav-link">Dashboard</a>
                 <a href="#playground" class="nav-link">Playground</a>
-                <a href="#docs" class="nav-link">API Docs</a>
+                <a href="#docs" class="nav-link">Docs</a>
             </nav>
             <div class="system-status">
                 <div class="status-indicator online"></div>
-                <span class="status-text">Gateway Online</span>
+                <span class="status-text">Agent Runtime Active</span>
             </div>
         </div>
     </header>
 
-    <main class="dashboard-container" id="dashboard">
-        <!-- Hero Section -->
-        <section class="hero-section">
-            <div class="hero-badge">
-                <i data-lucide="sparkles" class="badge-icon"></i> Developer Console Active
-            </div>
-            <h1>Secure Key Integration &amp; Playground</h1>
-            <p class="hero-subtitle">Manage your credentials, monitor gateway metrics, and test endpoints live with micro-latency simulation.</p>
-        </section>
+    <!-- Split Hero Section -->
+    <section class="hero-split-section" id="hero">
+        <div class="hero-split-container">
+            <!-- Left Info Panel -->
+            <div class="hero-info-panel">
+                <div class="hero-badge">
+                    <i data-lucide="sparkles" class="badge-icon"></i> Introducing Agentic Runtime v2.0
+                </div>
+                <h1>Autonomous AI Agents. Operating in Your Workspace.</h1>
+                <p class="hero-subtitle">Deploy autonomous developers that think in loops, invoke system tools, edit files, and run tests locally. Experience the future of software engineering.</p>
+                
+                <div class="hero-actions">
+                    <button type="button" id="spawn-agent-btn" class="primary-btn pulse-glow">
+                        <i data-lucide="terminal"></i> Spawn AI Agent
+                    </button>
+                    <a href="https://github.com/9080442272/web-page" target="_blank" class="secondary-btn">
+                        <i data-lucide="github"></i> View Repository
+                    </a>
+                </div>
 
+                <div class="integration-row">
+                    <span class="integration-label">Supports integrations</span>
+                    <div class="integration-icons">
+                        <i data-lucide="git-branch" title="Git Integration"></i>
+                        <i data-lucide="terminal" title="CLI Terminals"></i>
+                        <i data-lucide="code" title="Modern Editors"></i>
+                        <i data-lucide="database" title="Databases"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Interactive Console Panel -->
+            <div class="hero-console-panel">
+                <div class="console-window">
+                    <div class="console-title-bar">
+                        <div class="window-buttons">
+                            <span class="win-btn close"></span>
+                            <span class="win-btn minimize"></span>
+                            <span class="win-btn maximize"></span>
+                        </div>
+                        <span class="console-tab-name" id="console-status"><i data-lucide="play" class="rotating-slow"></i> Agentic Process: Idle</span>
+                    </div>
+                    <div class="console-body" id="agent-console-output">
+                        <div class="console-welcome">
+                            <p class="text-cyan">=========================================</p>
+                            <p class="text-bold">AGENTIC RUNTIME TERMINAL v2.0</p>
+                            <p class="text-cyan">=========================================</p>
+                            <p class="text-muted">Awaiting task instantiation. Click "Spawn AI Agent" on the left to start autonomous execution.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="dashboard-container" id="dashboard">
         <!-- Bento Grid Layout -->
         <div class="bento-grid">
             
@@ -232,7 +280,7 @@ const response = await axios.post('https://api.devcore.io/v1/query', {
 
     <footer class="main-footer">
         <div class="footer-container">
-            <p>&copy; 2026 DevCore Inc. All rights reserved. Secured local console.</p>
+            <p>&copy; 2026 AgenticCore Inc. All rights reserved. Secured local console.</p>
             <div class="footer-links">
                 <a href="#">Privacy Policy</a>
                 <a href="#">Terms of Use</a>

@@ -21,10 +21,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const avgLatencyEl = document.getElementById('avg-latency');
     const successRateEl = document.getElementById('success-rate');
 
+    // Hero AI Agentic elements
+    const spawnAgentBtn = document.getElementById('spawn-agent-btn');
+    const agentConsoleOutput = document.getElementById('agent-console-output');
+    const consoleStatus = document.getElementById('console-status');
+
     // State Variables
     let requestCount = 1248;
     let successCount = 1247.75; // 99.98%
     let totalLatency = 1248 * 24; // 24ms average
+    let isAgentRunning = false;
 
     // Mock payloads config
     const payloads = {
@@ -45,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
         empty: `{}`
     };
 
-    // Helper: Log message to terminal simulator
+    // Helper: Log message to playground terminal simulator
     function logToTerminal(text, type = '') {
         const line = document.createElement('div');
         line.className = `terminal-line ${type}`;
@@ -63,6 +69,26 @@ document.addEventListener('DOMContentLoaded', () => {
         terminalOutput.scrollTop = terminalOutput.scrollHeight;
     }
 
+    // Helper: Log message to Hero Agent Console simulator
+    function logToAgentConsole(text, type = '') {
+        const timestamp = new Date().toLocaleTimeString();
+        const line = document.createElement('div');
+        line.className = `console-line ${type}`;
+        
+        const timeSpan = document.createElement('span');
+        timeSpan.className = 'timestamp';
+        timeSpan.textContent = `[${timestamp}]`;
+        
+        line.appendChild(timeSpan);
+        
+        const contentSpan = document.createElement('span');
+        contentSpan.innerHTML = text;
+        line.appendChild(contentSpan);
+        
+        agentConsoleOutput.appendChild(line);
+        agentConsoleOutput.scrollTop = agentConsoleOutput.scrollHeight;
+    }
+
     // Initialize Lucide Icons for dynamically generated elements
     function refreshIcons() {
         if (window.lucide) {
@@ -70,6 +96,105 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // ==========================================================================
+    // AI AGENT LOOP SIMULATION
+    // ==========================================================================
+    if (spawnAgentBtn) {
+        spawnAgentBtn.addEventListener('click', () => {
+            if (isAgentRunning) return;
+            isAgentRunning = true;
+
+            // 1. UI Loading States
+            spawnAgentBtn.disabled = true;
+            spawnAgentBtn.innerHTML = '<i data-lucide="loader" class="rotating"></i> Running Loop...';
+            consoleStatus.innerHTML = '<i data-lucide="loader" class="rotating text-cyan"></i> Agentic Process: Running...';
+            refreshIcons();
+
+            // Clear Console Output
+            agentConsoleOutput.innerHTML = '';
+            logToTerminal('Spawning new autonomous AI Agent loop...', 'system');
+
+            // 2. Timed Simulation steps
+            const simulationSteps = [
+                {
+                    delay: 0,
+                    action: () => logToAgentConsole('<span class="text-bold text-yellow">Task Instantiated:</span> Verify local environment credentials, check authorization signatures, and query system stats.', 'system')
+                },
+                {
+                    delay: 1000,
+                    action: () => logToAgentConsole('<span class="text-purple">[REASONING]</span> Analyzing workspace structure to find environment variables.', 'system')
+                },
+                {
+                    delay: 2000,
+                    action: () => logToAgentConsole('<span class="text-cyan">[TOOL CALL]</span> <code class="text-bold">list_dir({ DirectoryPath: "/workspace/web-page" })</code>', 'system')
+                },
+                {
+                    delay: 2800,
+                    action: () => logToAgentConsole('<span class="text-green">[TOOL RESULT]</span> Found 4 files: <code>.env</code>, <code>index.html</code>, <code>style.css</code>, <code>app.js</code>', 'system')
+                },
+                {
+                    delay: 3800,
+                    action: () => logToAgentConsole('<span class="text-purple">[REASONING]</span> Located <code>.env</code> config file. Reading keys to inspect API credentials...', 'system')
+                },
+                {
+                    delay: 4800,
+                    action: () => logToAgentConsole('<span class="text-cyan">[TOOL CALL]</span> <code class="text-bold">read_file({ FilePath: ".env" })</code>', 'system')
+                },
+                {
+                    delay: 5500,
+                    action: () => logToAgentConsole('<span class="text-green">[TOOL RESULT]</span> Parsed successfully: <code>API_KEY=8f6412c5...ba7129</code>', 'system')
+                },
+                {
+                    delay: 6500,
+                    action: () => logToAgentConsole('<span class="text-purple">[REASONING]</span> Authenticating credentials against central devcore gateway API...', 'system')
+                },
+                {
+                    delay: 7500,
+                    action: () => logToAgentConsole('<span class="text-cyan">[TOOL CALL]</span> <code class="text-bold">fetch_url({ Url: "https://api.devcore.io/v1/auth/status" })</code>', 'system')
+                },
+                {
+                    delay: 8200,
+                    action: () => logToAgentConsole('<span class="text-green">[TOOL RESULT]</span> Response: <code>HTTP/1.1 200 OK</code>. Auth Token verified successfully.', 'system')
+                },
+                {
+                    delay: 9200,
+                    action: () => logToAgentConsole('<span class="text-purple">[REASONING]</span> System configuration verified. Completing workspace instantiation.', 'system')
+                },
+                {
+                    delay: 10200,
+                    action: () => {
+                        logToAgentConsole('<span class="text-bold text-green">✔ Loop Completed:</span> AI Agent successfully verified config and authenticated gateway route.', 'success');
+                        
+                        // Re-enable and reset
+                        isAgentRunning = false;
+                        spawnAgentBtn.disabled = false;
+                        spawnAgentBtn.innerHTML = '<i data-lucide="terminal"></i> Spawn AI Agent';
+                        consoleStatus.innerHTML = '<i data-lucide="play"></i> Agentic Process: Idle';
+                        refreshIcons();
+
+                        logToTerminal('AI Agent completed workspace loop successfully.', 'success');
+                        
+                        // Increment Metrics slightly
+                        requestCount += 2;
+                        successCount += 2;
+                        totalLatency += 114; // simulated loop latency sum
+                        requestCountEl.textContent = requestCount.toLocaleString();
+                        avgLatencyEl.textContent = `${Math.round(totalLatency / requestCount)}ms`;
+                        successRateEl.textContent = `${((successCount / requestCount) * 100).toFixed(2)}%`;
+                    }
+                }
+            ];
+
+            // Trigger steps
+            simulationSteps.forEach(step => {
+                setTimeout(step.action, step.delay);
+            });
+        });
+    }
+
+    // ==========================================================================
+    // API KEY CONFIGURATOR PANEL
+    // ==========================================================================
     // 1. API Key Visibility Toggle
     toggleKeyVisibilityBtn.addEventListener('click', () => {
         if (apiKeyInput.type === 'password') {
@@ -142,6 +267,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1200);
     });
 
+    // ==========================================================================
+    // REQUEST PLAYGROUND
+    // ==========================================================================
     // 4. Payload Selection Changes
     payloadSelect.addEventListener('change', (e) => {
         const val = e.target.value;
